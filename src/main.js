@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Counter from './Counter';
+import Canvas from './Canvas';
  
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-    React.createElement(Counter),
+    React.createElement(Canvas),
     document.getElementById('mount')
   );
 });
