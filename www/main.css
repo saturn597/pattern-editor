@@ -1,3 +1,32 @@
 canvas {
     border: 3px solid black;
 }
+
+.grid {
+    width: 100px;
+}
+
+.onPixel {
+    width: 48px;
+    height: 48px;
+
+    background-color: white;
+    border: 1px solid white;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.offPixel {
+    width: 48px;
+    height: 48px;
+
+    background-color: black;
+    border: 1px solid white;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+
+}

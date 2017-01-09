@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Canvas from './Canvas';
+import Grid from './Grid';
  
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-    React.createElement(Canvas),
+    React.createElement(Grid),
     document.getElementById('mount')
   );
 });
