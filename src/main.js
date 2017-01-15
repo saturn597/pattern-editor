@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Grid from './Grid';
+import PixelEditor from './PixelEditor';
  
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-    React.createElement(Grid),
+    React.createElement(PixelEditor),
     document.getElementById('mount')
   );
 });

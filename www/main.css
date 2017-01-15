@@ -1,5 +1,8 @@
 canvas {
-    border: 3px solid black;
+    border: 1px solid black;
+    border-radius: 2px;
+    display: inline-block;
+    margin: 10px;
 }
 
 .grid {
@@ -9,6 +12,7 @@ canvas {
 
 .container {
     border: 1px solid black;
+    display: inline-block;
     height: 63px;
     width: 63px;
     overflow: hidden;
