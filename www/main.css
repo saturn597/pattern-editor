@@ -18,6 +18,14 @@ canvas {
     overflow: hidden;
 }
 
+.controls {
+    background-color: white;
+    border: 2px solid black;
+    height: 100px;
+    width: 200px;
+    padding: 20px;
+}
+
 .offPixel {
     width: 8px;
     height: 8px;

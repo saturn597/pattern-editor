@@ -22,7 +22,6 @@ class PixelEditor extends React.Component {
         canvas.width = 8;
 
         const ctx = canvas.getContext('2d');
-
         const id = ctx.createImageData(8, 8);
 
         let i = 0;
@@ -56,13 +55,22 @@ class PixelEditor extends React.Component {
     }
 
     render() {
-        return <div>
+        return <div className="controls">
                    <Grid pixelData={this.state.pixelData}
                        mouseDown={this.mouseDown.bind(this)}
                        mouseOver={this.mouseOver.bind(this)}>
                    </Grid>
-                   <Mockup canvasWidth="56" canvasHeight="34" image={this.getImage()}></Mockup>
+                   <Mockup
+                       canvasWidth="56"
+                       canvasHeight="34"
+                       image={this.getImage()}
+                       mouseDown={this.setBackground.bind(this)}>
+                   </Mockup>
                </div>
+    }
+
+    setBackground() {
+        document.body.style.backgroundImage = `url("${this.getImage().toDataURL()}")`;
     }
 }
 
@@ -110,9 +118,10 @@ class Mockup extends React.Component {
 
     render() {
         return <canvas
+            onMouseDown={this.props.mouseDown}
             ref={(c) => this.canvas = c}
-            width={this.props.canvasWidth}
-            height={this.props.canvasHeight}>
+            height={this.props.canvasHeight}
+            width={this.props.canvasWidth}>
             </canvas>
     }
 }
