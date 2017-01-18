@@ -7,7 +7,7 @@ class PixelEditor extends React.Component {
         this.state = {pixelData: [], switchState: null};
 
         for (let i = 0; i < 64; i++) {
-            this.state.pixelData.push({id: i, on: false});
+            this.state.pixelData.push({id: i, on: true});
         }
 
         document.onmouseup = (e) => {
@@ -60,12 +60,14 @@ class PixelEditor extends React.Component {
                        mouseDown={this.mouseDown.bind(this)}
                        mouseOver={this.mouseOver.bind(this)}>
                    </Grid>
-                   <Mockup
-                       canvasWidth="56"
-                       canvasHeight="34"
-                       image={this.getImage()}
-                       mouseDown={this.setBackground.bind(this)}>
-                   </Mockup>
+                   <div className="mockupContainer">
+                       <Mockup
+                           canvasWidth="54"
+                           canvasHeight="33"
+                           image={this.getImage()}
+                           mouseDown={this.setBackground.bind(this)}>
+                       </Mockup>
+                   </div>
                </div>
     }
 
@@ -111,13 +113,14 @@ class Mockup extends React.Component {
 
         for (let x = 0; x < xCount; x++) {
             for (let y = 0; y < yCount; y++) {
-                ctx.drawImage(this.props.image, this.props.image.width * x - 7, this.props.image.height * y - 4);
+                ctx.drawImage(this.props.image, this.props.image.width * x - 7, this.props.image.height * y - 3);
             }
         }
     }
 
     render() {
         return <canvas
+            className="mockup"
             onMouseDown={this.props.mouseDown}
             ref={(c) => this.canvas = c}
             height={this.props.canvasHeight}

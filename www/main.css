@@ -1,20 +1,25 @@
-canvas {
+.mockupContainer {
     border: 1px solid black;
-    border-radius: 2px;
     display: inline-block;
-    margin: 10px;
+    height: 39px;
+    margin-left: 5px;  /* TODO: Find this exact number */
+}
+
+.mockup {
+    border-top: 1px solid black;
+    margin: 5px 0 0 0;
 }
 
 .grid {
-    height: 64px;
-    width: 64px;
+    height: 40px;
+    width: 40px;
 }
 
 .container {
     border: 1px solid black;
     display: inline-block;
-    height: 63px;
-    width: 63px;
+    height: 39px;
+    width: 39px;
     overflow: hidden;
 }
 
@@ -27,8 +32,8 @@ canvas {
 }
 
 .offPixel {
-    width: 8px;
-    height: 8px;
+    width: 5px;
+    height: 5px;
 
     background-color: black;
     border: 1px solid white;
@@ -38,8 +43,8 @@ canvas {
 }
 
 .onPixel {
-    width: 8px;
-    height: 8px;
+    width: 5px;
+    height: 5px;
 
     background-color: white;
     border: 1px solid white;
