@@ -57,6 +57,7 @@ class PixelEditor extends React.Component {
     render() {
         return <div className="controls">
                    <Grid pixelData={this.state.pixelData}
+                       xPixels={8}
                        mouseDown={this.mouseDown.bind(this)}
                        mouseOver={this.mouseOver.bind(this)}>
                    </Grid>
@@ -78,16 +79,30 @@ class PixelEditor extends React.Component {
 
 class Grid extends React.Component {
     render() {
-        let pixelData = this.props.pixelData.map((p) =>
+        const divs = [];
+        const pixels = this.props.pixelData.slice();
+
+        while (pixels.length > 0) {
+            divs.push(pixels.splice(0, 8));
+        }
+
+        let data = divs.map((d, id) => {
+            const rowPixels = d.map((p) =>
                 <Pixel
                     key={p.id}
                     on={p.on}
                     onMouseDown={(e) => this.props.mouseDown(e, p)}
                     onMouseOver={(e) => this.props.mouseOver(e, p)}>
-                </Pixel>)
+                </Pixel>
+            );
 
-        return <div className="container">
-                    <div className="grid">{pixelData}</div>
+            return <div className="pixelRow">{rowPixels}</div>;
+        });
+
+        return <div className="gridContainer">
+                    <div className="grid">
+                        {data}
+                    </div>
                </div>;
     }
 }

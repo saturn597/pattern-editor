@@ -10,45 +10,54 @@
     margin: 5px 0 0 0;
 }
 
+.gridContainer {
+    border: 1px solid black;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+
+    height: 39px;
+    width: 39px;
+}
+
 .grid {
+    border-collapse: collapse;
+    display: inline-table;
+    margin: 0;
+
+    position: absolute;
+    top: -1px;
+    left: -1px;
+
     height: 40px;
     width: 40px;
 }
 
-.container {
-    border: 1px solid black;
-    display: inline-block;
-    height: 39px;
-    width: 39px;
-    overflow: hidden;
+.pixelRow {
+    display: table-row;
 }
 
 .controls {
     background-color: white;
     border: 2px solid black;
+    padding: 20px;
+
     height: 100px;
     width: 200px;
-    padding: 20px;
 }
 
 .offPixel {
-    width: 5px;
-    height: 5px;
-
     background-color: black;
     border: 1px solid white;
-    display: inline-block;
-    margin: -1px;
+    display: table-cell;
+    margin: 0;
     padding: 0;
 }
 
 .onPixel {
-    width: 5px;
-    height: 5px;
-
     background-color: white;
     border: 1px solid white;
-    display: inline-block;
-    margin: -1px;
+    display: table-cell;
+    margin: 0;
     padding: 0;
 }
