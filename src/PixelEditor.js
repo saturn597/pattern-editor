@@ -1,4 +1,6 @@
 import React from 'react';
+import { scaleCanvas } from './utilities';
+import config from './config';
 
 class PixelEditor extends React.Component {
     constructor(props) {
@@ -37,7 +39,7 @@ class PixelEditor extends React.Component {
 
         ctx.putImageData(id, 0, 0);
 
-        return canvas;
+        return scaleCanvas(canvas, config.xScale, config.yScale);
     }
 
     mouseDown(e, p) {
@@ -63,8 +65,10 @@ class PixelEditor extends React.Component {
                    </Grid>
                    <div className="mockupContainer">
                        <Mockup
-                           canvasWidth="54"
-                           canvasHeight="33"
+                           canvasWidth={ 54 * config.xScale }
+                           canvasHeight={ 33 * config.yScale }
+                           xOffset={-7}
+                           yOffset={-3}
                            image={this.getImage()}
                            mouseDown={this.setBackground.bind(this)}>
                        </Mockup>
@@ -96,7 +100,7 @@ class Grid extends React.Component {
                 </Pixel>
             );
 
-            return <div className="pixelRow">{rowPixels}</div>;
+            return <div key={id} className="pixelRow">{rowPixels}</div>;
         });
 
         return <div className="gridContainer">
@@ -122,13 +126,20 @@ class Mockup extends React.Component {
     }
 
     draw(canvas) {
-        const xCount = canvas.width / this.props.image.width + 1;
-        const yCount = canvas.height / this.props.image.height + 1;
+        const xOffset = this.props.xOffset;
+        const yOffset = this.props.yOffset;
+
+        const tileWidth = this.props.image.width;
+        const tileHeight = this.props.image.height;
+
+        const xCount = (canvas.width - xOffset) / tileWidth + 1;
+        const yCount = (canvas.height - yOffset) / tileHeight + 1;
+
         const ctx = canvas.getContext('2d');
 
         for (let x = 0; x < xCount; x++) {
             for (let y = 0; y < yCount; y++) {
-                ctx.drawImage(this.props.image, this.props.image.width * x - 7, this.props.image.height * y - 3);
+                ctx.drawImage(this.props.image, tileWidth * x + xOffset, tileHeight * y + yOffset);
             }
         }
     }
