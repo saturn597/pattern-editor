@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PixelEditor from './PixelEditor';
 
-require('!style!css!../www/main.css');
+require('!style!css!less!../www/main.less');
  
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
