@@ -1,6 +1,6 @@
 const config = {
-    'xScale': 2,
-    'yScale': 2
+    'xScale': 3,
+    'yScale': 3
 }
 
 export default config;

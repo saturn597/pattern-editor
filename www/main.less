@@ -1,24 +1,26 @@
+@scale: 3;
+
 .mockupContainer {
-    border: 2px solid black;
+    border: 1px * @scale solid black;
     display: inline-block;
-    height: 78px;
-    margin-left: 5px;  /* TODO: Find this exact number */
+    height: 39px * @scale;
+    margin-left: 3px * @scale;  /* TODO: Find this exact number */
 }
 
 .mockup {
-    border-top: 2px solid black;
+    border-top: 1px * @scale solid black;
     display: block;
-    margin: 10px 0 0 0;
+    margin: 5px * @scale 0 0 0;
 }
 
 .gridContainer {
-    border: 2px solid black;
+    border: 1px * @scale solid black;
     display: inline-block;
     overflow: hidden;
     position: relative;
 
-    height: 78px;
-    width: 78px;
+    height: 39px * @scale;
+    width: 39px * @scale;
 }
 
 .grid {
@@ -27,11 +29,11 @@
     margin: 0;
 
     position: absolute;
-    top: -2px;
-    left: -2px;
+    top: -1px * @scale;
+    left: -1px * @scale;
 
-    height: 80px;
-    width: 80px;
+    height: 40px * @scale;
+    width: 40px * @scale;
 }
 
 .pixelRow {
@@ -40,16 +42,16 @@
 
 .controls {
     background-color: white;
-    border: 2px solid black;
-    padding: 20px;
+    border: 1px * @scale solid black;
+    padding: 10px * @scale;
 
-    height: 100px;
-    width: 200px;
+    height: 50px * @scale;
+    width: 100px * @scale;
 }
 
 .offPixel {
     background-color: black;
-    border: 2px solid white;
+    border: 1px * @scale solid white;
     display: table-cell;
     margin: 0;
     padding: 0;
@@ -57,7 +59,7 @@
 
 .onPixel {
     background-color: white;
-    border: 2px solid white;
+    border: 1px * @scale solid white;
     display: table-cell;
     margin: 0;
     padding: 0;
