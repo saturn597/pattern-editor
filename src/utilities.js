@@ -28,4 +28,47 @@ function scaleCanvas(oldCanvas, xScale, yScale) {
     return newCanvas;
 }
 
-export { scaleCanvas };
+function padToString(num, radix, desiredLength) {
+    // Like the method toString on a number "num", but left-pads the result
+    // with 0's to hit a specified length.
+
+    let result = num.toString(radix);
+    const diff = desiredLength - result.length;
+    if (diff > 0) {
+        result = '0'.repeat(diff) + result;
+    }
+
+    return result;
+}
+
+function toUrl(pixels) {
+    // Take a series of pixels and convert it to a string format.
+
+    pixels = pixels.map((p) => p.on ? '1' : '0').join('');
+
+    // That gives us a basic string, but let's convert the "binary" to base 32
+    // to shorten.
+
+    const conv = (str) => padToString(parseInt(str, 2), 32, 7);
+
+    const a = pixels.slice(0, 32);  // Split it in two so we don't overflow
+    const b = pixels.slice(32);
+
+    return conv(a) + conv(b);
+}
+
+function fromUrl(str) {
+    // Reverse the operation in toUrl - take a string and convert it to pixels.
+    // Assumes a string representing pixels in base 32.
+
+    const a = str.slice(0, 7);
+    const b = str.slice(7);
+
+    const conv = (str) => padToString(parseInt(str, 32), 2, 32);
+
+    return Array.prototype.map.call(conv(a) + conv(b), (c, i) => {
+        return { on: c === '1' ? true : false, id: i };
+    });
+}
+
+export { fromUrl, toUrl, scaleCanvas };

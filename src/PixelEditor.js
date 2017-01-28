@@ -1,21 +1,26 @@
 import React from 'react';
-import { scaleCanvas } from './utilities';
+import { fromUrl, toUrl, scaleCanvas } from './utilities';
 import config from './config';
 
 class PixelEditor extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {pixelData: [], switchState: null};
+        // fromUrl('3vvvvvv3vvvvvv') yields an array of pixels that
+        // are all "on" - make that the default.
+        this.state = {
+            switchState: null,
+            pixelData: fromUrl(document.location.search.slice(1) ||
+                    '3vvvvvv3vvvvvv')
+        };
 
-        for (let i = 0; i < 64; i++) {
-            this.state.pixelData.push({id: i, on: true});
-        }
+        this.setBackground();
 
         document.onmouseup = (e) => {
             e.preventDefault();
             this.setState({switchState: null});
         };
+
     }
 
     getImage() {
@@ -73,7 +78,8 @@ class PixelEditor extends React.Component {
                            mouseDown={this.setBackground.bind(this)}>
                        </Mockup>
                    </div>
-               </div>
+                   <a href={'?' + toUrl(this.state.pixelData)}>Link to pattern</a>
+               </div>;
     }
 
     setBackground() {
