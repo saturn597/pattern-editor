@@ -10,18 +10,11 @@ class PixelEditor extends React.Component {
         // are all "on" - make that the default.
         this.allOn = '3vvvvvv3vvvvvv';
         this.state = {
-            switchState: null,
             pixelData: fromUrl(document.location.search.slice(1) ||
                     this.allOn)
         };
 
         this.setBackground();
-
-        document.onmouseup = (e) => {
-            e.preventDefault();
-            this.setState({switchState: null});
-        };
-
     }
 
     getImage() {
@@ -48,26 +41,11 @@ class PixelEditor extends React.Component {
         return scaleCanvas(canvas, config.xScale, config.yScale);
     }
 
-    mouseDown(e, p) {
-        e.preventDefault();
-        p.on = !p.on;
-        this.setState({pixelData: this.state.pixelData, switchState: p.on});
-    }
-
-    mouseOver(e, p) {
-        e.preventDefault();
-        if (this.state.switchState !== null) {
-            p.on = this.state.switchState;
-            this.setState({pixelData: this.state.pixelData});
-        }
-    }
-
     render() {
         return <div className="controls">
                    <Grid pixelData={this.state.pixelData}
                        xPixels={8}
-                       mouseDown={this.mouseDown.bind(this)}
-                       mouseOver={this.mouseOver.bind(this)}>
+                       updatePixels={this.updatePixels.bind(this)}>
                    </Grid>
                    <div className="mockupContainer">
                        <Mockup
@@ -87,9 +65,39 @@ class PixelEditor extends React.Component {
     setBackground() {
         document.body.style.backgroundImage = `url("${this.getImage().toDataURL()}")`;
     }
+
+    updatePixels(data) {
+        this.setState({pixelData: data});
+    }
 }
 
 class Grid extends React.Component {
+    constructor(props) {
+        super(props);
+        this.switchState = null;
+
+        document.onmouseup = (e) => {
+            this.switchState = null;
+            e.preventDefault();
+        };
+
+    }
+
+    mouseDown(e, p) {
+        e.preventDefault();
+        p.on = !p.on;
+        this.switchState = p.on;
+        this.props.updatePixels(this.props.pixelData);
+    }
+
+    mouseOver(e, p) {
+        e.preventDefault();
+        if (this.switchState !== null) {
+            p.on = this.switchState;
+            this.props.updatePixels(this.props.pixelData);
+        }
+    }
+
     render() {
         const divs = [];
         const pixels = this.props.pixelData.slice();
@@ -103,8 +111,8 @@ class Grid extends React.Component {
                 <Pixel
                     key={p.id}
                     on={p.on}
-                    onMouseDown={(e) => this.props.mouseDown(e, p)}
-                    onMouseOver={(e) => this.props.mouseOver(e, p)}>
+                    onMouseDown={(e) => this.mouseDown(e, p)}
+                    onMouseOver={(e) => this.mouseOver(e, p)}>
                 </Pixel>
             );
 
