@@ -8,10 +8,11 @@ class PixelEditor extends React.Component {
 
         // fromUrl('3vvvvvv3vvvvvv') yields an array of pixels that
         // are all "on" - make that the default.
+        this.allOn = '3vvvvvv3vvvvvv';
         this.state = {
             switchState: null,
             pixelData: fromUrl(document.location.search.slice(1) ||
-                    '3vvvvvv3vvvvvv')
+                    this.allOn)
         };
 
         this.setBackground();
@@ -79,6 +80,7 @@ class PixelEditor extends React.Component {
                        </Mockup>
                    </div>
                    <a href={'?' + toUrl(this.state.pixelData)}>Link to pattern</a>
+                   <a href={'?' + this.allOn}>Clear pattern</a>
                </div>;
     }
 
