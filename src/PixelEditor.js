@@ -27,7 +27,7 @@ class PixelEditor extends React.Component {
 
         let i = 0;
         for (let p of this.state.pixelData) {
-            if (p.on) {
+            if (p) {
                 id.data.fill(255, i, i + 4);
             } else {
                 id.data.fill(0, i, i + 3);
@@ -83,36 +83,36 @@ class Grid extends React.Component {
 
     }
 
-    mouseDown(e, p) {
+    mouseDown(e, id) {
         e.preventDefault();
-        p.on = !p.on;
-        this.switchState = p.on;
-        this.props.updatePixels(this.props.pixelData);
+        this.switchState = !this.props.pixelData[id];
+        this.updatePixel(id);
     }
 
-    mouseOver(e, p) {
+    mouseOver(e, id) {
         e.preventDefault();
         if (this.switchState !== null) {
-            p.on = this.switchState;
-            this.props.updatePixels(this.props.pixelData);
+            this.updatePixel(id);
         }
     }
 
     render() {
         const divs = [];
-        const pixels = this.props.pixelData.slice();
+        const pixels = this.props.pixelData.map((isOn, id) => {
+            return { isOn, id };
+        });
 
         while (pixels.length > 0) {
             divs.push(pixels.splice(0, 8));
         }
 
         let data = divs.map((d, id) => {
-            const rowPixels = d.map((p) =>
+            const rowPixels = d.map((p, id) =>
                 <Pixel
                     key={p.id}
-                    on={p.on}
-                    onMouseDown={(e) => this.mouseDown(e, p)}
-                    onMouseOver={(e) => this.mouseOver(e, p)}>
+                    on={p.isOn}
+                    onMouseDown={(e) => this.mouseDown(e, p.id)}
+                    onMouseOver={(e) => this.mouseOver(e, p.id)}>
                 </Pixel>
             );
 
@@ -124,6 +124,12 @@ class Grid extends React.Component {
                         {data}
                     </div>
                </div>;
+    }
+
+    updatePixel(id) {
+        const pixels = this.props.pixelData.slice();
+        pixels[id] = this.switchState;
+        this.props.updatePixels(pixels);
     }
 }
 

@@ -44,7 +44,7 @@ function padToString(num, radix, desiredLength) {
 function toUrl(pixels) {
     // Take a series of pixels and convert it to a string format.
 
-    pixels = pixels.map((p) => p.on ? '1' : '0').join('');
+    pixels = pixels.map((p) => p ? '1' : '0').join('');
 
     // That gives us a basic string, but let's convert the "binary" to base 32
     // to shorten.
@@ -66,9 +66,7 @@ function fromUrl(str) {
 
     const conv = (str) => padToString(parseInt(str, 32), 2, 32);
 
-    return Array.prototype.map.call(conv(a) + conv(b), (c, i) => {
-        return { on: c === '1' ? true : false, id: i };
-    });
+    return Array.prototype.map.call(conv(a) + conv(b), (c) => c === '1');
 }
 
 export { fromUrl, toUrl, scaleCanvas };
