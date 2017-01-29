@@ -73,8 +73,8 @@ class PixelEditor extends React.Component {
                        <Mockup
                            canvasWidth={ 54 * config.xScale }
                            canvasHeight={ 33 * config.yScale }
-                           xOffset={-7}
-                           yOffset={-3}
+                           xOffset={ config.xOffset * config.xScale }
+                           yOffset={ config.yOffset * config.xScale }
                            image={this.getImage()}
                            mouseDown={this.setBackground.bind(this)}>
                        </Mockup>
