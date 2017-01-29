@@ -69,4 +69,26 @@ function fromUrl(str) {
     return Array.prototype.map.call(conv(a) + conv(b), (c) => c === '1');
 }
 
-export { fromUrl, toUrl, scaleCanvas };
+function pixelsToCanvas(w, h, pixels) {
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.createImageData(w, h);
+
+    pixels.forEach((p, i) => {
+        const start = i * 4;
+        if (p) {
+            imageData.data.fill(255, start, start + 4);
+        } else {
+            imageData.data.fill(0, start, start + 3);
+            imageData.data[start + 3] = 255;
+        }
+    });
+
+    ctx.putImageData(imageData, 0, 0);
+    return canvas;
+}
+
+export { fromUrl, toUrl, pixelsToCanvas, scaleCanvas };

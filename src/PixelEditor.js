@@ -1,6 +1,19 @@
 import React from 'react';
-import { fromUrl, toUrl, scaleCanvas } from './utilities';
+import { fromUrl, toUrl, pixelsToCanvas, scaleCanvas } from './utilities';
 import config from './config';
+
+function makeCanvas(w, h, pixels) {
+    return scaleCanvas(pixelsToCanvas(w, h, pixels),
+            config.xScale,
+            config.yScale);
+}
+
+function strToBool(str) {
+    return Array.prototype.map.call(str, (c) => c === "1");
+}
+
+const rightArrow = makeCanvas(3, 5, strToBool('011001000001011')).toDataURL();
+const leftArrow = makeCanvas(3, 5, strToBool('110100000100110')).toDataURL();
 
 class PixelEditor extends React.Component {
     constructor(props) {
@@ -18,27 +31,7 @@ class PixelEditor extends React.Component {
     }
 
     getImage() {
-        const canvas = document.createElement('canvas');
-        canvas.height = 8;
-        canvas.width = 8;
-
-        const ctx = canvas.getContext('2d');
-        const id = ctx.createImageData(8, 8);
-
-        let i = 0;
-        for (let p of this.state.pixelData) {
-            if (p) {
-                id.data.fill(255, i, i + 4);
-            } else {
-                id.data.fill(0, i, i + 3);
-                id.data[i + 3] = 255;
-            }
-            i+=4;
-        }
-
-        ctx.putImageData(id, 0, 0);
-
-        return scaleCanvas(canvas, config.xScale, config.yScale);
+        return makeCanvas(8, 8, this.state.pixelData);
     }
 
     render() {
@@ -48,6 +41,8 @@ class PixelEditor extends React.Component {
                        updatePixels={this.updatePixels.bind(this)}>
                    </Grid>
                    <div className="mockupContainer">
+                       <img src={leftArrow} id="leftArrow"></img>
+                       <img src={rightArrow} id="rightArrow"></img>
                        <Mockup
                            canvasWidth={ 54 * config.xScale }
                            canvasHeight={ 33 * config.yScale }
