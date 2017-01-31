@@ -5,12 +5,15 @@ a {
 }
 
 #rightArrow {
-    right: 13px * @scale;
+    /* Padding makes clickable area bigger */
+    padding: 0 13px * @scale 0 11px * @scale;
     position: absolute;
+    right: 0;
 }
 
 #leftArrow {
-    left: 13px * @scale;
+    left: 0;
+    padding: 0 11px * @scale 0 13px * @scale;
     position: absolute;
 }
 
@@ -18,9 +21,11 @@ a {
     border: 1px * @scale solid black;
     border-radius: 2px * @scale;
     display: inline-block;
-    height: 39px * @scale;
     margin-left: 3px * @scale;  /* TODO: Find this exact number */
     position: relative;
+
+    height: 39px * @scale;
+    width: 54px * @scale;
 }
 
 .mockup {

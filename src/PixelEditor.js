@@ -1,6 +1,9 @@
 import React from 'react';
 import { fromUrl, toUrl, pixelsToCanvas, scaleCanvas } from './utilities';
 import config from './config';
+import compressedPatterns from './patterns';
+
+const patterns = compressedPatterns.map(fromUrl);
 
 function makeCanvas(w, h, pixels) {
     return scaleCanvas(pixelsToCanvas(w, h, pixels),
@@ -19,12 +22,11 @@ class PixelEditor extends React.Component {
     constructor(props) {
         super(props);
 
-        // fromUrl('3vvvvvv3vvvvvv') yields an array of pixels that
-        // are all "on" - make that the default.
-        this.allOn = '3vvvvvv3vvvvvv';
+        this.currentPattern = 0;
+
         this.state = {
             pixelData: fromUrl(document.location.search.slice(1) ||
-                    this.allOn)
+                    compressedPatterns[this.currentPattern])
         };
 
         this.setBackground();
@@ -34,15 +36,33 @@ class PixelEditor extends React.Component {
         return makeCanvas(8, 8, this.state.pixelData);
     }
 
+    nextPattern() {
+        this.currentPattern += 1;
+        if (this.currentPattern >= patterns.length) {
+            this.currentPattern = 0;
+        }
+
+        this.setPixels(patterns[this.currentPattern]);
+    }
+
+    previousPattern() {
+        this.currentPattern -= 1;
+        if (this.currentPattern < 0) {
+            this.currentPattern = patterns.length - 1;
+        }
+
+        this.setPixels(patterns[this.currentPattern]);
+    }
+
     render() {
         return <div className="controls">
                    <Grid pixelData={this.state.pixelData}
                        xPixels={8}
-                       updatePixels={this.updatePixels.bind(this)}>
+                       setPixels={this.setPixels.bind(this)}>
                    </Grid>
                    <div className="mockupContainer">
-                       <img src={leftArrow} id="leftArrow"></img>
-                       <img src={rightArrow} id="rightArrow"></img>
+                       <img src={leftArrow} id="leftArrow" onClick={this.previousPattern.bind(this)}></img>
+                       <img src={rightArrow} id="rightArrow" onClick={this.nextPattern.bind(this)}></img>
                        <Mockup
                            canvasWidth={ 54 * config.xScale }
                            canvasHeight={ 33 * config.yScale }
@@ -53,7 +73,7 @@ class PixelEditor extends React.Component {
                        </Mockup>
                    </div>
                    <a href={'?' + toUrl(this.state.pixelData)}>Link to pattern</a>
-                   <a href={'?' + this.allOn}>Clear pattern</a>
+                   <a href={'?'}>Clear pattern</a>
                </div>;
     }
 
@@ -61,7 +81,7 @@ class PixelEditor extends React.Component {
         document.body.style.backgroundImage = `url("${this.getImage().toDataURL()}")`;
     }
 
-    updatePixels(data) {
+    setPixels(data) {
         this.setState({pixelData: data});
     }
 }
@@ -124,7 +144,7 @@ class Grid extends React.Component {
     updatePixel(id) {
         const pixels = this.props.pixelData.slice();
         pixels[id] = this.switchState;
-        this.props.updatePixels(pixels);
+        this.props.setPixels(pixels);
     }
 }
 
