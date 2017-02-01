@@ -3,6 +3,7 @@ import { fromUrl, toUrl, pixelsToCanvas, scaleCanvas } from './utilities';
 import config from './config';
 import compressedPatterns from './patterns';
 
+
 const patterns = compressedPatterns.map(fromUrl);
 
 function makeCanvas(w, h, pixels) {
@@ -15,8 +16,9 @@ function strToBool(str) {
     return Array.prototype.map.call(str, (c) => c === "1");
 }
 
-const rightArrow = makeCanvas(3, 5, strToBool('011001000001011')).toDataURL();
 const leftArrow = makeCanvas(3, 5, strToBool('110100000100110')).toDataURL();
+const rightArrow = makeCanvas(3, 5, strToBool('011001000001011')).toDataURL();
+
 
 class PixelEditor extends React.Component {
     constructor(props) {
@@ -86,6 +88,7 @@ class PixelEditor extends React.Component {
     }
 }
 
+
 class Grid extends React.Component {
     constructor(props) {
         super(props);
@@ -148,6 +151,7 @@ class Grid extends React.Component {
     }
 }
 
+
 class Mockup extends React.Component {
     constructor(props) {
         super(props);
@@ -192,6 +196,7 @@ class Mockup extends React.Component {
     }
 }
 
+
 class Pixel extends React.Component {
     render() {
         return <div
@@ -200,5 +205,6 @@ class Pixel extends React.Component {
             onMouseOver={this.props.onMouseOver}></div>;
     }
 }
+
 
 export default PixelEditor;

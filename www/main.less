@@ -4,18 +4,63 @@ a {
     display: block;
 }
 
-#rightArrow {
-    /* Padding makes clickable area bigger */
-    padding: 0 13px * @scale 0 11px * @scale;
-    position: absolute;
-    right: 0;
+.controls {
+    background-color: white;
+    border: 1px * @scale solid black;
+    padding: 10px * @scale;
+
+    height: 50px * @scale;
+    width: 100px * @scale;
 }
 
-#leftArrow {
-    left: 0;
-    padding: 0 11px * @scale 0 13px * @scale;
-    position: absolute;
+
+/*** Styles for the editable pixel grid ***/
+
+.gridContainer {
+    border: 1px * @scale solid black;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+
+    height: 39px * @scale;
+    width: 39px * @scale;
 }
+
+.grid {
+    border-collapse: collapse;
+    display: table;
+    margin: 0;
+
+    position: absolute;
+    left: -1px * @scale;
+    top: -1px * @scale;
+
+    height: 40px * @scale;
+    width: 40px * @scale;
+}
+
+.offPixel {
+    background-color: black;
+    border: 1px * @scale solid white;
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+}
+
+.onPixel {
+    background-color: white;
+    border: 1px * @scale solid white;
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+}
+
+.pixelRow {
+    display: table-row;
+}
+
+
+/*** Styles for the mockup area that previews the tiled pattern ***/
 
 .mockupContainer {
     border: 1px * @scale solid black;
@@ -34,54 +79,15 @@ a {
     margin: 5px * @scale 0 0 0;
 }
 
-.gridContainer {
-    border: 1px * @scale solid black;
-    display: inline-block;
-    overflow: hidden;
-    position: relative;
-
-    height: 39px * @scale;
-    width: 39px * @scale;
-}
-
-.grid {
-    border-collapse: collapse;
-    display: table;
-    margin: 0;
-
+#leftArrow {
+    left: 0;
+    /* Padding makes clickable area bigger */
+    padding: 0 11px * @scale 0 13px * @scale;
     position: absolute;
-    top: -1px * @scale;
-    left: -1px * @scale;
-
-    height: 40px * @scale;
-    width: 40px * @scale;
 }
 
-.pixelRow {
-    display: table-row;
-}
-
-.controls {
-    background-color: white;
-    border: 1px * @scale solid black;
-    padding: 10px * @scale;
-
-    height: 50px * @scale;
-    width: 100px * @scale;
-}
-
-.offPixel {
-    background-color: black;
-    border: 1px * @scale solid white;
-    display: table-cell;
-    margin: 0;
-    padding: 0;
-}
-
-.onPixel {
-    background-color: white;
-    border: 1px * @scale solid white;
-    display: table-cell;
-    margin: 0;
-    padding: 0;
+#rightArrow {
+    padding: 0 13px * @scale 0 11px * @scale;
+    position: absolute;
+    right: 0;
 }

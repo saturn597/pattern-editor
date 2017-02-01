@@ -1,3 +1,31 @@
+
+/*** Manipulating canvases based on arrays of boolean "pixels" ***/
+
+function pixelsToCanvas(w, h, pixels) {
+    // Return a canvas of specified height and width
+    // Pixels is a boolean array of length up to h * w specifying whether
+    // each pixel is "on" (white) or "off" (black).
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.createImageData(w, h);
+
+    pixels.forEach((p, i) => {
+        const start = i * 4;
+        if (p) {
+            imageData.data.fill(255, start, start + 4);
+        } else {
+            imageData.data.fill(0, start, start + 3);
+            imageData.data[start + 3] = 255;
+        }
+    });
+
+    ctx.putImageData(imageData, 0, 0);
+    return canvas;
+}
+
 function scaleCanvas(oldCanvas, xScale, yScale) {
     // scale a canvas by integer factors > 1
 
@@ -28,6 +56,9 @@ function scaleCanvas(oldCanvas, xScale, yScale) {
     return newCanvas;
 }
 
+
+/*** Creating compressed versions of "pixel" arrays ***/
+
 function padToString(num, radix, desiredLength) {
     // Like the method toString on a number "num", but left-pads the result
     // with 0's to hit a specified length.
@@ -39,6 +70,18 @@ function padToString(num, radix, desiredLength) {
     }
 
     return result;
+}
+
+function fromUrl(str) {
+    // Reverse the operation in toUrl - take a string and convert it to pixels.
+    // Assumes a string representing pixels in base 32.
+
+    const a = str.slice(0, 7);
+    const b = str.slice(7);
+
+    const conv = (str) => padToString(parseInt(str, 32), 2, 32);
+
+    return Array.prototype.map.call(conv(a) + conv(b), (c) => c === '1');
 }
 
 function toUrl(pixels) {
@@ -57,38 +100,5 @@ function toUrl(pixels) {
     return conv(a) + conv(b);
 }
 
-function fromUrl(str) {
-    // Reverse the operation in toUrl - take a string and convert it to pixels.
-    // Assumes a string representing pixels in base 32.
-
-    const a = str.slice(0, 7);
-    const b = str.slice(7);
-
-    const conv = (str) => padToString(parseInt(str, 32), 2, 32);
-
-    return Array.prototype.map.call(conv(a) + conv(b), (c) => c === '1');
-}
-
-function pixelsToCanvas(w, h, pixels) {
-    const canvas = document.createElement('canvas');
-    canvas.width = w;
-    canvas.height = h;
-
-    const ctx = canvas.getContext('2d');
-    const imageData = ctx.createImageData(w, h);
-
-    pixels.forEach((p, i) => {
-        const start = i * 4;
-        if (p) {
-            imageData.data.fill(255, start, start + 4);
-        } else {
-            imageData.data.fill(0, start, start + 3);
-            imageData.data[start + 3] = 255;
-        }
-    });
-
-    ctx.putImageData(imageData, 0, 0);
-    return canvas;
-}
 
 export { fromUrl, toUrl, pixelsToCanvas, scaleCanvas };
