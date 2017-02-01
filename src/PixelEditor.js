@@ -57,12 +57,12 @@ class PixelEditor extends React.Component {
     }
 
     render() {
-        return <div className="controls">
+        return <div id="pixelEditor">
                    <Grid pixelData={this.state.pixelData}
                        xPixels={8}
                        setPixels={this.setPixels.bind(this)}>
                    </Grid>
-                   <div className="mockupContainer">
+                   <div id="mockupContainer">
                        <img src={leftArrow} id="leftArrow" onClick={this.previousPattern.bind(this)}></img>
                        <img src={rightArrow} id="rightArrow" onClick={this.nextPattern.bind(this)}></img>
                        <Mockup
@@ -137,8 +137,8 @@ class Grid extends React.Component {
             return <div key={id} className="pixelRow">{rowPixels}</div>;
         });
 
-        return <div className="gridContainer">
-                    <div className="grid">
+        return <div id="gridContainer">
+                    <div id="grid">
                         {data}
                     </div>
                </div>;
@@ -187,7 +187,7 @@ class Mockup extends React.Component {
 
     render() {
         return <canvas
-            className="mockup"
+            id="mockup"
             onMouseDown={this.props.mouseDown}
             ref={(c) => this.canvas = c}
             height={this.props.canvasHeight}
