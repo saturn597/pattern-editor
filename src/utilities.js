@@ -1,4 +1,15 @@
 
+/*** Generally useful js utilities ***/
+
+function bindMethods(obj, methods) {
+    // Take a list of strings representing methods of obj.
+    // Bind those methods to obj.
+    methods.forEach((f) => {
+        obj[f] = obj[f].bind(obj);
+    });
+}
+
+
 /*** Manipulating canvases based on arrays of boolean "pixels" ***/
 
 function pixelsToCanvas(w, h, pixels) {
@@ -57,11 +68,11 @@ function scaleCanvas(oldCanvas, xScale, yScale) {
 }
 
 
-/*** Creating compressed versions of "pixel" arrays ***/
+/*** Dealing with string versions of "pixel" arrays ***/
 
 function padToString(num, radix, desiredLength) {
-    // Like the method toString on a number "num", but left-pads the result
-    // with 0's to hit a specified length.
+    // This is like the method toString on a number "num", but left-pads the
+    // result with 0's to hit a specified length.
 
     let result = num.toString(radix);
     const diff = desiredLength - result.length;
@@ -73,10 +84,10 @@ function padToString(num, radix, desiredLength) {
 }
 
 function fromUrl(str) {
-    // Reverse the operation in toUrl - take a string and convert it to pixels.
-    // Assumes a string representing pixels in base 32.
+    // Reverse the operation in toUrl - take a string (representing a number in
+    // base 32) and convert it to pixels.
 
-    const a = str.slice(0, 7);
+    const a = str.slice(0, 7);  // Split it in two so we don't overflow
     const b = str.slice(7);
 
     const conv = (str) => padToString(parseInt(str, 32), 2, 32);
@@ -94,11 +105,11 @@ function toUrl(pixels) {
 
     const conv = (str) => padToString(parseInt(str, 2), 32, 7);
 
-    const a = pixels.slice(0, 32);  // Split it in two so we don't overflow
+    const a = pixels.slice(0, 32);
     const b = pixels.slice(32);
 
     return conv(a) + conv(b);
 }
 
 
-export { fromUrl, toUrl, pixelsToCanvas, scaleCanvas };
+export { bindMethods, fromUrl, toUrl, pixelsToCanvas, scaleCanvas };

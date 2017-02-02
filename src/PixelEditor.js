@@ -1,5 +1,5 @@
 import React from 'react';
-import { fromUrl, toUrl, pixelsToCanvas, scaleCanvas } from './utilities';
+import { bindMethods, fromUrl, toUrl, pixelsToCanvas, scaleCanvas } from './utilities';
 import config from './config';
 import compressedPatterns from './patterns';
 
@@ -32,6 +32,12 @@ class PixelEditor extends React.Component {
         };
 
         this.setBackground();
+
+        bindMethods(this, [
+            'nextPattern',
+            'previousPattern',
+            'setBackground',
+            'setPixels']);
     }
 
     getImage() {
@@ -60,18 +66,22 @@ class PixelEditor extends React.Component {
         return <div id="pixelEditor">
                    <Grid pixelData={this.state.pixelData}
                        xPixels={8}
-                       setPixels={this.setPixels.bind(this)}>
+                       setPixels={this.setPixels}>
                    </Grid>
                    <div id="mockupContainer">
-                       <img src={leftArrow} id="leftArrow" onClick={this.previousPattern.bind(this)}></img>
-                       <img src={rightArrow} id="rightArrow" onClick={this.nextPattern.bind(this)}></img>
+                       <img src={leftArrow}
+                            id="leftArrow"
+                            onClick={this.previousPattern}></img>
+                       <img src={rightArrow}
+                            id="rightArrow"
+                            onClick={this.nextPattern}></img>
                        <Mockup
                            canvasWidth={ 54 * config.xScale }
                            canvasHeight={ 33 * config.yScale }
                            xOffset={ config.xOffset * config.xScale }
                            yOffset={ config.yOffset * config.xScale }
                            image={this.getImage()}
-                           mouseDown={this.setBackground.bind(this)}>
+                           mouseDown={this.setBackground}>
                        </Mockup>
                    </div>
                    <a href={'?' + toUrl(this.state.pixelData)}>Link to pattern</a>
