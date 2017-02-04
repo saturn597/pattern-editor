@@ -86,8 +86,8 @@ class PixelEditor extends React.Component {
                        </Mockup>
                    </div>
                    <div><a href={'?' + toUrl(this.state.pixelData)} id="patternLink">Link to pattern</a></div>
-                   <div id="description">{config.description}</div>
                    {tileExamples}
+                   <Description content={config.description}></Description>
                </div>;
     }
 
@@ -97,6 +97,27 @@ class PixelEditor extends React.Component {
 
     setPixels(data) {
         this.setState({pixelData: data});
+    }
+}
+
+
+class Description extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {show: false};
+        this.show = () => this.setState({show: true});
+        this.hide = () => this.setState({show: false});
+    }
+
+    render() {
+        if (this.state.show) {
+            return <div id="description">
+                       {this.props.content}
+                       <div><span id="descriptionControl" onClick={this.hide}>Hide Description</span></div>
+                   </div>;
+        }  else {
+            return <div><span id="descriptionControl" onClick={this.show}>What is this?</span></div>;
+        }
     }
 }
 
