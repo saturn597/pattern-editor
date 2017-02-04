@@ -61,33 +61,31 @@ class PixelEditor extends React.Component {
     render() {
         const tileExamples = [1, 2, 3, 4, 5].map((scale, k) => {
             const c = scaleCanvas(pixelsToCanvas(8, 8, this.state.pixelData), scale, scale);
-            return <img src={c.toDataURL()} className="tileExample" key={k}></img>;
+            return <img src={c.toDataURL()} className="tileExample" key={k} />;
         });
 
         return <div id="pixelEditor">
                    <Grid pixelData={this.state.pixelData}
                        xPixels={8}
-                       setPixels={this.setPixels}>
-                   </Grid>
+                       setPixels={this.setPixels} />
                    <div id="mockupContainer">
                        <img src={leftArrow}
                             id="leftArrow"
-                            onClick={this.previousPattern}></img>
+                            onClick={this.previousPattern} />
                        <img src={rightArrow}
                             id="rightArrow"
-                            onClick={this.nextPattern}></img>
+                            onClick={this.nextPattern} />
                        <Mockup
                            canvasWidth={ 54 * config.xScale }
                            canvasHeight={ 33 * config.yScale }
                            xOffset={ config.xOffset * config.xScale }
                            yOffset={ config.yOffset * config.xScale }
                            tile={this.getScaledTile()}
-                           mouseDown={this.setBackground}>
-                       </Mockup>
+                           mouseDown={this.setBackground} />
                    </div>
                    <div><a href={'?' + toUrl(this.state.pixelData)} id="patternLink">Link to pattern</a></div>
                    {tileExamples}
-                   <Description content={config.description}></Description>
+                   <Description content={config.description} />
                </div>;
     }
 
@@ -163,8 +161,7 @@ class Grid extends React.Component {
                     key={p.id}
                     on={p.isOn}
                     onMouseDown={(e) => this.mouseDown(e, p.id)}
-                    onMouseOver={(e) => this.mouseOver(e, p.id)}>
-                </Pixel>
+                    onMouseOver={(e) => this.mouseOver(e, p.id)} />
             );
 
             return <div key={id} className="pixelRow">{rowPixels}</div>;
@@ -224,8 +221,7 @@ class Mockup extends React.Component {
             onMouseDown={this.props.mouseDown}
             ref={(c) => this.canvas = c}
             height={this.props.canvasHeight}
-            width={this.props.canvasWidth}>
-            </canvas>
+            width={this.props.canvasWidth} />
     }
 }
 
@@ -235,7 +231,7 @@ class Pixel extends React.Component {
         return <div
             className={this.props.on ? "onPixel" : "offPixel"}
             onMouseDown={this.props.onMouseDown}
-            onMouseOver={this.props.onMouseOver}></div>;
+            onMouseOver={this.props.onMouseOver} />;
     }
 }
 
