@@ -21539,7 +21539,7 @@
 
 	        var _this = _possibleConstructorReturn(this, (PixelEditor.__proto__ || Object.getPrototypeOf(PixelEditor)).call(this, props));
 
-	        console.log("TEST");
+	        console.log("TEST2");
 
 	        _this.currentPattern = 0;
 
