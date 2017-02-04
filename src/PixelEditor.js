@@ -4,7 +4,7 @@ import config from './config';
 import compressedPatterns from './patterns';
 
 
-const patterns = compressedPatterns.map(fromUrl);
+const patterns = compressedPatterns.map((p) => fromUrl(p, 64));
 
 function makeCanvas(w, h, pixels) {
     return scaleCanvas(pixelsToCanvas(w, h, pixels),
@@ -12,12 +12,8 @@ function makeCanvas(w, h, pixels) {
             config.yScale);
 }
 
-function strToBool(str) {
-    return Array.prototype.map.call(str, (c) => c === "1");
-}
-
-const leftArrow = makeCanvas(3, 5, strToBool('110100000100110')).toDataURL();
-const rightArrow = makeCanvas(3, 5, strToBool('011001000001011')).toDataURL();
+const leftArrow = makeCanvas(3, 5, fromUrl('q16', 15)).toDataURL();
+const rightArrow = makeCanvas(3, 5, fromUrl('cgb', 15)).toDataURL();
 
 
 class PixelEditor extends React.Component {
@@ -28,7 +24,7 @@ class PixelEditor extends React.Component {
 
         this.state = {
             pixelData: fromUrl(document.location.search.slice(1) ||
-                    compressedPatterns[this.currentPattern])
+                    compressedPatterns[this.currentPattern], 64)
         };
 
         this.setBackground();

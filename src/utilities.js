@@ -83,32 +83,32 @@ function padToString(num, radix, desiredLength) {
     return result;
 }
 
-function fromUrl(str) {
-    // Reverse the operation in toUrl - take a string (representing a number in
-    // base 32) and convert it to pixels.
-
-    const a = str.slice(0, 7);  // Split it in two so we don't overflow
-    const b = str.slice(7);
+function fromUrl(str, maxPixels) {
+    // Reverse the operation in toUrl - take a string and convert it to pixels.
 
     const conv = (str) => padToString(parseInt(str, 32), 2, 32);
+    const substrings = str.split('-').map(conv).join('').slice(-maxPixels);
 
-    return Array.prototype.map.call(conv(a) + conv(b), (c) => c === '1');
+    return Array.prototype.map.call(substrings, (c) => c === '1');
 }
 
 function toUrl(pixels) {
     // Take a series of pixels and convert it to a string format.
 
-    pixels = pixels.map((p) => p ? '1' : '0').join('');
+    const pixelStrings = [];
 
-    // That gives us a basic string, but let's convert the "binary" to base 32
-    // to shorten.
+    const conv = (pixels) => pixels.map((p) => p ? '1' : '0').join('');
 
-    const conv = (str) => padToString(parseInt(str, 2), 32, 7);
+    // "conv" will give us a "binary" string representation. We want to
+    // compress that by converting to base 32. But to convert to base 32, we'll
+    // need to split things up to keep parseInt from overflowing.
+    for (let i = 0; i < pixels.length; i += 32) {
+        const upper = Math.min(i + 32, pixels.length);
+        const current = conv(pixels.slice(i, upper));
+        pixelStrings.push(parseInt(current, 2).toString(32));
+    }
 
-    const a = pixels.slice(0, 32);
-    const b = pixels.slice(32);
-
-    return conv(a) + conv(b);
+    return pixelStrings.join('-');
 }
 
 

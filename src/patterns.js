@@ -1,12 +1,12 @@
 export default [
-    '3vvvvvv3vvvvvv',
+    '3vvvvvv-3vvvvvv',
 
-    '00000000000000',
-    '0h012000h01200',
-    '0h8g8k80h8g8k8',
-    '1aqklda1aqklda',
-    '2l01ag02l01ag0',
-    '1alalal1alalal',
-    '247cs3g246e1o7',
+    '0000000-0000000',
+    '0h01200-0h01200',
+    '0h8g8k8-0h8g8k8',
+    '1aqklda-1aqklda',
+    '2l01ag0-2l01ag0',
+    '1alalal-1alalal',
+    '247cs3g-246e1o7',
 ]
 
