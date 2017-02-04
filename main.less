@@ -1,0 +1,127 @@
+@scale: 3;
+
+body {
+    text-align: center;
+}
+
+#pixelEditor {
+    background-color: white;
+    border: 2px * @scale solid black;
+    font-family: "Times New Roman", serif;
+    margin: 0 auto;
+    padding: 9px * @scale;
+    width: 106px * @scale;
+}
+
+#description {
+    border-top: 2px * @scale solid black;
+    clear: both;
+    font-size: 5px * @scale;
+    padding-top: 9px * @scale;
+    white-space: pre-wrap;
+}
+
+#descriptionControl {
+    #patternLink;
+    font-size: 20px;
+    margin: 15px 0 0 0;
+}
+
+
+#patternLink {
+    color: black;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 8px * @scale;
+    margin: 4px * @scale 0 4px * @scale 0;
+    text-decoration: underline;
+
+    &:hover {
+        color: #555;
+    }
+
+    &:active {
+        color: #999;
+    }
+}
+
+.tileExample {
+    border: 1px solid #555;
+    margin: 4px * @scale 1px * @scale 0 0;
+}
+
+
+/*** Styles for the editable pixel grid ***/
+
+#gridContainer {
+    border: 1px * @scale solid black;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+
+    height: 39px * @scale;
+    width: 39px * @scale;
+}
+
+#grid {
+    border-collapse: collapse;
+    display: table;
+    margin: 0;
+
+    position: absolute;
+    left: -1px * @scale;
+    top: -1px * @scale;
+
+    height: 40px * @scale;
+    width: 40px * @scale;
+}
+
+.offPixel {
+    background-color: black;
+    border: 1px * @scale solid white;
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+}
+
+.onPixel {
+    .offPixel;
+    background-color: white;
+}
+
+.pixelRow {
+    display: table-row;
+}
+
+
+/*** Styles for the mockup area that previews the tiled pattern ***/
+
+#mockupContainer {
+    border: 1px * @scale solid black;
+    border-radius: 2px * @scale;
+    display: inline-block;
+    margin-left: 9px * @scale;
+    position: relative;
+
+    height: 39px * @scale;
+    width: 54px * @scale;
+}
+
+#mockup {
+    border-top: 1px * @scale solid black;
+    display: block;
+    margin: 5px * @scale 0 0 0;
+}
+
+#leftArrow {
+    left: 0;
+    // Padding to enlarge clickable area
+    padding: 0 11px * @scale 0 13px * @scale;
+    position: absolute;
+}
+
+#rightArrow {
+    padding: 0 13px * @scale 0 11px * @scale;
+    position: absolute;
+    right: 0;
+}
