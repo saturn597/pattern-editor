@@ -40,7 +40,7 @@ class PixelEditor extends React.Component {
             'setPixels']);
     }
 
-    getImage() {
+    getScaledTile() {
         return makeCanvas(8, 8, this.state.pixelData);
     }
 
@@ -63,6 +63,11 @@ class PixelEditor extends React.Component {
     }
 
     render() {
+        const tileExamples = [1, 2, 3, 4, 5].map((scale, k) => {
+            const c = scaleCanvas(pixelsToCanvas(8, 8, this.state.pixelData), scale, scale);
+            return <img src={c.toDataURL()} className="tileExample" key={k}></img>;
+        });
+
         return <div id="pixelEditor">
                    <Grid pixelData={this.state.pixelData}
                        xPixels={8}
@@ -80,17 +85,18 @@ class PixelEditor extends React.Component {
                            canvasHeight={ 33 * config.yScale }
                            xOffset={ config.xOffset * config.xScale }
                            yOffset={ config.yOffset * config.xScale }
-                           image={this.getImage()}
+                           tile={this.getScaledTile()}
                            mouseDown={this.setBackground}>
                        </Mockup>
                    </div>
-                   <a href={'?' + toUrl(this.state.pixelData)}>Link to pattern</a>
-                   <a href={'?'}>Clear pattern</a>
+                   <div><a href={'?' + toUrl(this.state.pixelData)} id="patternLink">Link to pattern</a></div>
+                   <div id="description">{config.description}</div>
+                   {tileExamples}
                </div>;
     }
 
     setBackground() {
-        document.body.style.backgroundImage = `url("${this.getImage().toDataURL()}")`;
+        document.body.style.backgroundImage = `url("${this.getScaledTile().toDataURL()}")`;
     }
 
     setPixels(data) {
@@ -180,8 +186,8 @@ class Mockup extends React.Component {
         const xOffset = this.props.xOffset;
         const yOffset = this.props.yOffset;
 
-        const tileWidth = this.props.image.width;
-        const tileHeight = this.props.image.height;
+        const tileWidth = this.props.tile.width;
+        const tileHeight = this.props.tile.height;
 
         const xCount = (canvas.width - xOffset) / tileWidth + 1;
         const yCount = (canvas.height - yOffset) / tileHeight + 1;
@@ -190,7 +196,7 @@ class Mockup extends React.Component {
 
         for (let x = 0; x < xCount; x++) {
             for (let y = 0; y < yCount; y++) {
-                ctx.drawImage(this.props.image, tileWidth * x + xOffset, tileHeight * y + yOffset);
+                ctx.drawImage(this.props.tile, tileWidth * x + xOffset, tileHeight * y + yOffset);
             }
         }
     }

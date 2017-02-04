@@ -1,16 +1,45 @@
 @scale: 3;
 
-a {
-    display: block;
+body {
+    text-align: center;
 }
 
 #pixelEditor {
     background-color: white;
-    border: 1px * @scale solid black;
-    padding: 10px * @scale;
+    border: 2px * @scale solid black;
+    font-family: "Times New Roman", serif;
+    margin: 0 auto;
+    padding: 9px * @scale;
+    width: 106px * @scale;
+}
 
-    height: 50px * @scale;
-    width: 100px * @scale;
+#description {
+    border-top: 2px * @scale solid black;
+    clear: both;
+    font-size: 5px * @scale;
+    padding-top: 9px * @scale;
+    white-space: pre-wrap;
+}
+
+#patternLink {
+    color: black;
+    display: inline-block;
+    font-size: 8px * @scale;
+    margin: 4px * @scale 0 4px * @scale 0;
+    text-decoration: underline;
+
+    &:hover {
+        color: #555;
+    }
+
+    &:active {
+        color: #999;
+    }
+}
+
+.tileExample {
+    border: 1px solid #555;
+    margin: 4px * @scale 1px * @scale 0 0;
 }
 
 
@@ -63,7 +92,7 @@ a {
     border: 1px * @scale solid black;
     border-radius: 2px * @scale;
     display: inline-block;
-    margin-left: 3px * @scale;  // TODO: Find this exact number
+    margin-left: 9px * @scale;
     position: relative;
 
     height: 39px * @scale;
