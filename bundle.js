@@ -21539,7 +21539,7 @@
 
 	        var _this = _possibleConstructorReturn(this, (PixelEditor.__proto__ || Object.getPrototypeOf(PixelEditor)).call(this, props));
 
-	        _this.currentPattern = 0;
+	        _this.currentPattern = 4;
 
 	        _this.state = {
 	            pixelData: (0, _utilities.fromUrl)(document.location.search.slice(1) || _patterns2.default[_this.currentPattern], 64)
@@ -21618,7 +21618,11 @@
 	                        'Link to pattern'
 	                    )
 	                ),
-	                tileExamples,
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'tileExamples' },
+	                    tileExamples
+	                ),
 	                _react2.default.createElement(Description, { content: _config2.default.description })
 	            );
 	        }
@@ -21662,7 +21666,6 @@
 	                return _react2.default.createElement(
 	                    'div',
 	                    { id: 'description' },
-	                    this.props.content,
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
@@ -21671,12 +21674,13 @@
 	                            { id: 'descriptionControl', onClick: this.hide },
 	                            'Hide Description'
 	                        )
-	                    )
+	                    ),
+	                    this.props.content
 	                );
 	            } else {
 	                return _react2.default.createElement(
 	                    'div',
-	                    null,
+	                    { id: 'description' },
 	                    _react2.default.createElement(
 	                        'span',
 	                        { id: 'descriptionControl', onClick: this.show },
@@ -22007,7 +22011,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var desc = 'This is a tribute to the desktop pattern editor in early Mac systems (like System 6). That editor let you create an 8x8 pixel, black-and-white pattern and use it as your desktop background.\n\nAbove you\'ll see two boxes side-by-side.\n\nClick inside the left box to make pixels black or white.\n\nPreview your pattern in the right box. Click the preview to set the background for the whole page. Click the arrows above the preview to cycle through built-in patterns.\n\n"Link to pattern" is a permanent link to your pattern. Share the link to show your pattern to others.\n\nBelow that you\'ll see a single tile of your pattern at several different sizes. Save your pattern locally by right-clicking one of them and selecting "Save image as...". Make the pattern your desktop background for a fuller retro-Mac experience.';
+	var desc = 'This is a tribute to and imitation of the desktop pattern editor in early Macintosh systems (like System 6). That editor let you create an 8x8 pixel, black-and-white pattern and use it as your desktop background.\n\nAbove you\'ll see two boxes side-by-side.\n\nClick inside the left box to make pixels black or white.\n\nPreview your pattern in the right box. Click the preview to set the background for the whole page. Click the arrows above the preview to cycle through built-in patterns.\n\n"Link to pattern" is a permanent link to your pattern. Share the link to show your pattern to others.\n\nBelow that you\'ll see a single tile of your pattern at several different sizes. Save your pattern locally by right-clicking one of them and selecting "Save image as...". Make the saved image your desktop background for a fuller retro-Mac experience.';
 
 	var config = {
 	    'xOffset': -7,
@@ -22066,7 +22070,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  text-align: center;\n}\n#pixelEditor {\n  background-color: white;\n  border: 6px solid black;\n  font-family: \"Times New Roman\", serif;\n  margin: 0 auto;\n  padding: 27px;\n  width: 318px;\n}\n#description {\n  border-top: 6px solid black;\n  clear: both;\n  font-size: 15px;\n  padding-top: 27px;\n  white-space: pre-wrap;\n}\n#descriptionControl {\n  color: black;\n  cursor: pointer;\n  display: inline-block;\n  font-size: 24px;\n  margin: 12px 0 12px 0;\n  text-decoration: underline;\n  font-size: 20px;\n  margin: 15px 0 0 0;\n}\n#descriptionControl:hover {\n  color: #555;\n}\n#descriptionControl:active {\n  color: #999;\n}\n#patternLink {\n  color: black;\n  cursor: pointer;\n  display: inline-block;\n  font-size: 24px;\n  margin: 12px 0 12px 0;\n  text-decoration: underline;\n}\n#patternLink:hover {\n  color: #555;\n}\n#patternLink:active {\n  color: #999;\n}\n.tileExample {\n  border: 1px solid #555;\n  margin: 12px 3px 0 0;\n}\n/*** Styles for the editable pixel grid ***/\n#gridContainer {\n  border: 3px solid black;\n  display: inline-block;\n  overflow: hidden;\n  position: relative;\n  height: 117px;\n  width: 117px;\n}\n#grid {\n  border-collapse: collapse;\n  display: table;\n  margin: 0;\n  position: absolute;\n  left: -3px;\n  top: -3px;\n  height: 120px;\n  width: 120px;\n}\n.offPixel {\n  background-color: black;\n  border: 3px solid white;\n  display: table-cell;\n  margin: 0;\n  padding: 0;\n}\n.onPixel {\n  background-color: black;\n  border: 3px solid white;\n  display: table-cell;\n  margin: 0;\n  padding: 0;\n  background-color: white;\n}\n.pixelRow {\n  display: table-row;\n}\n/*** Styles for the mockup area that previews the tiled pattern ***/\n#mockupContainer {\n  border: 3px solid black;\n  border-radius: 6px;\n  display: inline-block;\n  margin-left: 27px;\n  position: relative;\n  height: 117px;\n  width: 162px;\n}\n#mockup {\n  border-top: 3px solid black;\n  display: block;\n  margin: 15px 0 0 0;\n}\n#leftArrow {\n  left: 0;\n  padding: 0 33px 0 39px;\n  position: absolute;\n}\n#rightArrow {\n  padding: 0 39px 0 33px;\n  position: absolute;\n  right: 0;\n}\n", ""]);
+	exports.push([module.id, "body {\n  font-family: \"Times New Roman\", serif;\n  text-align: center;\n}\n#header {\n  background: white;\n  border: 6px solid black;\n  margin: 0 auto 15px auto;\n  padding: 9px 27px 9px 27px;\n  width: 318px;\n}\nh1 {\n  margin: 0;\n}\n#pixelEditor {\n  background-color: white;\n  border: 6px solid black;\n  margin: 0 auto;\n  padding: 27px;\n  width: 318px;\n}\n#description {\n  border-top: 6px solid black;\n  clear: both;\n  font-size: 15px;\n  margin-top: 15px;\n  padding-top: 15px;\n  white-space: pre-wrap;\n}\n#tileExamples {\n  line-height: 0;\n}\n.tileExample {\n  border: 1px solid #555;\n  margin: 12px 3px 0 0;\n}\n/*** Styles for the editable pixel grid ***/\n#gridContainer {\n  border: 3px solid black;\n  display: inline-block;\n  overflow: hidden;\n  position: relative;\n  height: 117px;\n  width: 117px;\n}\n#grid {\n  border-collapse: collapse;\n  display: table;\n  margin: 0;\n  position: absolute;\n  left: -3px;\n  top: -3px;\n  height: 120px;\n  width: 120px;\n}\n.offPixel {\n  background-color: black;\n  border: 3px solid white;\n  display: table-cell;\n  margin: 0;\n  padding: 0;\n}\n.onPixel {\n  background-color: black;\n  border: 3px solid white;\n  display: table-cell;\n  margin: 0;\n  padding: 0;\n  background-color: white;\n}\n.pixelRow {\n  display: table-row;\n}\n/*** Styles for the mockup area that previews the tiled pattern ***/\n#mockupContainer {\n  border: 3px solid black;\n  border-radius: 6px;\n  display: inline-block;\n  margin-left: 27px;\n  position: relative;\n  height: 117px;\n  width: 162px;\n}\n#mockup {\n  border-top: 3px solid black;\n  display: block;\n  margin: 15px 0 0 0;\n}\n#leftArrow {\n  left: 0;\n  padding: 0 33px 0 39px;\n  position: absolute;\n}\n#rightArrow {\n  padding: 0 39px 0 33px;\n  position: absolute;\n  right: 0;\n}\n/*** Links/link-like controls ***/\n#descriptionControl {\n  color: black;\n  cursor: pointer;\n  display: inline-block;\n  font-size: 21px;\n  margin: 12px 0 15px 0;\n  margin-bottom: 15px;\n  text-decoration: underline;\n}\n#descriptionControl:hover {\n  color: #555;\n}\n#descriptionControl:active {\n  color: #999;\n}\na {\n  color: black;\n  cursor: pointer;\n  display: inline-block;\n  font-size: 21px;\n  margin: 12px 0 15px 0;\n  margin-bottom: 15px;\n  text-decoration: underline;\n  font-size: 15px;\n  margin: 0;\n  padding: 0;\n}\na:hover {\n  color: #555;\n}\na:active {\n  color: #999;\n}\n#patternLink {\n  color: black;\n  cursor: pointer;\n  display: inline-block;\n  font-size: 21px;\n  margin: 12px 0 15px 0;\n  margin-bottom: 15px;\n  text-decoration: underline;\n  font-size: 24px;\n  margin-bottom: 12px;\n}\n#patternLink:hover {\n  color: #555;\n}\n#patternLink:active {\n  color: #999;\n}\n", ""]);
 
 	// exports
 

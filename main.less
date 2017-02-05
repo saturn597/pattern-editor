@@ -1,13 +1,25 @@
 @scale: 3;
 
 body {
+    font-family: "Times New Roman", serif;
     text-align: center;
+}
+
+#header {
+    background: white;
+    border: 2px * @scale solid black;
+    margin: 0 auto 5px * @scale auto;
+    padding: 3px * @scale 9px * @scale 3px * @scale 9px * @scale;
+    width: 106px * @scale;
+}
+
+h1 {
+    margin: 0;
 }
 
 #pixelEditor {
     background-color: white;
     border: 2px * @scale solid black;
-    font-family: "Times New Roman", serif;
     margin: 0 auto;
     padding: 9px * @scale;
     width: 106px * @scale;
@@ -17,32 +29,13 @@ body {
     border-top: 2px * @scale solid black;
     clear: both;
     font-size: 5px * @scale;
-    padding-top: 9px * @scale;
+    margin-top: 5px * @scale;
+    padding-top: 5px * @scale;
     white-space: pre-wrap;
 }
 
-#descriptionControl {
-    #patternLink;
-    font-size: 20px;
-    margin: 15px 0 0 0;
-}
-
-
-#patternLink {
-    color: black;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 8px * @scale;
-    margin: 4px * @scale 0 4px * @scale 0;
-    text-decoration: underline;
-
-    &:hover {
-        color: #555;
-    }
-
-    &:active {
-        color: #999;
-    }
+#tileExamples {
+    line-height: 0;
 }
 
 .tileExample {
@@ -124,4 +117,38 @@ body {
     padding: 0 13px * @scale 0 11px * @scale;
     position: absolute;
     right: 0;
+}
+
+
+/*** Links/link-like controls ***/
+
+#descriptionControl {
+    color: black;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 7px * @scale;
+    margin: 4px * @scale 0 5px * @scale 0;
+    margin-bottom: 5px * @scale;
+    text-decoration: underline;
+
+    &:hover {
+        color: #555;
+    }
+
+    &:active {
+        color: #999;
+    }
+}
+
+a {
+    #descriptionControl;
+    font-size: 5px * @scale;
+    margin: 0;
+    padding: 0;
+}
+
+#patternLink {
+    #descriptionControl;
+    font-size: 8px * @scale;
+    margin-bottom: 4px * @scale;
 }
