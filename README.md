@@ -1,4 +1,4 @@
-A tribute to the desktop pattern editor in early Mac systems (like System 6). That editor let you create an 8x8 pixel, black-and-white pattern and use it as your desktop background. This app accomplishes something similar with HTML5 and React.
+A tribute to and imitation of the desktop pattern editor in early Macintosh systems (like System 6). That editor let you create an 8x8 pixel, black-and-white pattern and use it as your desktop background. This web app aims to do the same with HTML5 and React.
 
 See it live at:
 

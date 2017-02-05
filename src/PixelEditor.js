@@ -20,7 +20,7 @@ class PixelEditor extends React.Component {
     constructor(props) {
         super(props);
 
-        this.currentPattern = 0;
+        this.currentPattern = 4;
 
         this.state = {
             pixelData: fromUrl(document.location.search.slice(1) ||
@@ -84,7 +84,7 @@ class PixelEditor extends React.Component {
                            mouseDown={this.setBackground} />
                    </div>
                    <div><a href={'?' + toUrl(this.state.pixelData)} id="patternLink">Link to pattern</a></div>
-                   {tileExamples}
+                   <div id="tileExamples">{tileExamples}</div>
                    <Description content={config.description} />
                </div>;
     }
@@ -110,11 +110,13 @@ class Description extends React.Component {
     render() {
         if (this.state.show) {
             return <div id="description">
-                       {this.props.content}
                        <div><span id="descriptionControl" onClick={this.hide}>Hide Description</span></div>
+                       {this.props.content}
                    </div>;
         }  else {
-            return <div><span id="descriptionControl" onClick={this.show}>What is this?</span></div>;
+            return <div id="description">
+                        <span id="descriptionControl" onClick={this.show}>What is this?</span>
+                   </div>;
         }
     }
 }
