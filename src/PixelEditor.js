@@ -2,6 +2,7 @@ import React from 'react';
 import { bindMethods, fromUrl, toUrl, pixelsToCanvas, scaleCanvas } from './utilities';
 import config from './config';
 import compressedPatterns from './patterns';
+import Life from './Life';
 
 
 const patterns = compressedPatterns.map((p) => fromUrl(p, 64));
@@ -30,10 +31,27 @@ class PixelEditor extends React.Component {
         this.setBackground();
 
         bindMethods(this, [
+            'checkKeys',
             'nextPattern',
             'previousPattern',
             'setBackground',
-            'setPixels']);
+            'setPixels',
+            'stepLife',
+        ]);
+    }
+
+    checkKeys(e) {
+        if (e.key === 'l' || e.key === 'L') {
+            this.stepLife();
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener('keydown', this.checkKeys);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.checkKeys);
     }
 
     getScaledTile() {
@@ -56,6 +74,17 @@ class PixelEditor extends React.Component {
         }
 
         this.setPixels(patterns[this.currentPattern]);
+    }
+
+    stepLife() {
+        // Our Life class considers "true" cells alive. It looks better if our
+        // "false" pixels (the black ones) are the ones that are alive. So we
+        // "invert" the values when passing to and from the Life instance.
+        const r = a => a.map(v => !v);
+        this.setState((state, props) => {
+            const life = new Life(8, 8, r(state.pixelData));
+            return { pixelData: r(life.nextState()) };
+        });
     }
 
     render() {

@@ -10,7 +10,10 @@ Preview your pattern in the right box. Click the preview to set the background f
 
 "Link to pattern" is a permanent link to your pattern. Share the link to show your pattern to others.
 
-Below that you'll see a single tile of your pattern at several different sizes. Save your pattern locally by right-clicking one of them and selecting "Save image as...". Make the saved image your desktop background for a fuller retro-Mac experience.`;
+Below that you'll see a single tile of your pattern at several different sizes. Save your pattern locally by right-clicking one of them and selecting "Save image as...". Make the saved image your desktop background for a fuller retro-Mac experience.
+
+Finally, you can press the "L" key to "play" a variation on Conway's Game of Life. That's not an option in the Mac pattern editor - just added for fun here.
+`;
 
 
 const config = {
