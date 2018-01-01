@@ -67,7 +67,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(183);
+	__webpack_require__(184);
 
 	document.addEventListener('DOMContentLoaded', function () {
 	  _reactDom2.default.render(_react2.default.createElement(_PixelEditor2.default), document.getElementById('mount'));
@@ -21512,6 +21512,10 @@
 
 	var _patterns2 = _interopRequireDefault(_patterns);
 
+	var _Life = __webpack_require__(183);
+
+	var _Life2 = _interopRequireDefault(_Life);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21547,11 +21551,28 @@
 
 	        _this.setBackground();
 
-	        (0, _utilities.bindMethods)(_this, ['nextPattern', 'previousPattern', 'setBackground', 'setPixels']);
+	        (0, _utilities.bindMethods)(_this, ['checkKeys', 'nextPattern', 'previousPattern', 'setBackground', 'setPixels', 'stepLife']);
 	        return _this;
 	    }
 
 	    _createClass(PixelEditor, [{
+	        key: 'checkKeys',
+	        value: function checkKeys(e) {
+	            if (e.key === 'l' || e.key === 'L') {
+	                this.stepLife();
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            document.addEventListener('keydown', this.checkKeys);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            document.removeEventListener('keydown', this.checkKeys);
+	        }
+	    }, {
 	        key: 'getScaledTile',
 	        value: function getScaledTile() {
 	            return makeCanvas(8, 8, this.state.pixelData);
@@ -21575,6 +21596,22 @@
 	            }
 
 	            this.setPixels(patterns[this.currentPattern]);
+	        }
+	    }, {
+	        key: 'stepLife',
+	        value: function stepLife() {
+	            // Our Life class considers "true" cells alive. It looks better if our
+	            // "false" pixels (the black ones) are the ones that are alive. So we
+	            // "invert" the values when passing to and from the Life instance.
+	            var r = function r(a) {
+	                return a.map(function (v) {
+	                    return !v;
+	                });
+	            };
+	            this.setState(function (state, props) {
+	                var life = new _Life2.default(8, 8, r(state.pixelData));
+	                return { pixelData: r(life.nextState()) };
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -22011,7 +22048,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var desc = 'This is a tribute to and imitation of the desktop pattern editor in early Macintosh systems (like System 6). That editor let you create an 8x8 pixel, black-and-white pattern and use it as your desktop background.\n\nAbove you\'ll see two boxes side-by-side.\n\nClick inside the left box to make pixels black or white.\n\nPreview your pattern in the right box. Click the preview to set the background for the whole page. Click the arrows above the preview to cycle through built-in patterns.\n\n"Link to pattern" is a permanent link to your pattern. Share the link to show your pattern to others.\n\nBelow that you\'ll see a single tile of your pattern at several different sizes. Save your pattern locally by right-clicking one of them and selecting "Save image as...". Make the saved image your desktop background for a fuller retro-Mac experience.';
+	var desc = 'This is a tribute to and imitation of the desktop pattern editor in early Macintosh systems (like System 6). That editor let you create an 8x8 pixel, black-and-white pattern and use it as your desktop background.\n\nAbove you\'ll see two boxes side-by-side.\n\nClick inside the left box to make pixels black or white.\n\nPreview your pattern in the right box. Click the preview to set the background for the whole page. Click the arrows above the preview to cycle through built-in patterns.\n\n"Link to pattern" is a permanent link to your pattern. Share the link to show your pattern to others.\n\nBelow that you\'ll see a single tile of your pattern at several different sizes. Save your pattern locally by right-clicking one of them and selecting "Save image as...". Make the saved image your desktop background for a fuller retro-Mac experience.\n\nFinally, you can press the "L" key to "play" a variation on Conway\'s Game of Life. That\'s not an option in the Mac pattern editor - just added for fun here.\n';
 
 	var config = {
 	    'xOffset': -7,
@@ -22033,19 +22070,155 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = ['3vvvvvv-3vvvvvv', '0000000-0000000', '0h01200-0h01200', '0h8g8k8-0h8g8k8', '1aqklda-1aqklda', '2l01ag0-2l01ag0', '1alalal-1alalal', '247cs3g-246e1o7'];
+	exports.default = ['3vvvvvv-3vvvvvv', '0000000-0000000', '0h01200-0h01200', '0h8g8k8-0h8g8k8', '1aqklda-1aqklda', '2l01ag0-2l01ag0', '1alalal-1alalal', '247cs3g-246e1o7', '2marbd9-2h7tspa'];
 
 /***/ },
 /* 183 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function wrapValue(val, max) {
+	    // "Wrap" val to ensure 0 <= val < max
+	    val = val % max;
+	    if (val < 0) {
+	        val = max + val;
+	    }
+	    return val;
+	}
+
+	var Life = function () {
+	    // Implementation of a variation of Conway's Game of Life that has a finite
+	    // board where the edges "wrap".
+	    function Life(width, height, initial) {
+	        _classCallCheck(this, Life);
+
+	        this.width = width;
+	        this.height = height;
+
+	        if (initial === undefined) {
+	            this.cells = Array(width * height).fill(false);
+	        } else {
+	            this.setCells(initial);
+	        }
+	    }
+
+	    _createClass(Life, [{
+	        key: 'cellAt',
+	        value: function cellAt(_ref) {
+	            var _ref2 = _slicedToArray(_ref, 2),
+	                x = _ref2[0],
+	                y = _ref2[1];
+
+	            return this.cells[x + y * this.width];
+	        }
+	    }, {
+	        key: 'countNeighbors',
+	        value: function countNeighbors(_ref3) {
+	            var _ref4 = _slicedToArray(_ref3, 2),
+	                x = _ref4[0],
+	                y = _ref4[1];
+
+	            return this.neighbors([x, y]).map(this.cellAt, this).filter(function (v) {
+	                return v;
+	            }).length;
+	        }
+	    }, {
+	        key: 'neighbors',
+	        value: function neighbors(_ref5) {
+	            var _ref6 = _slicedToArray(_ref5, 2),
+	                x = _ref6[0],
+	                y = _ref6[1];
+
+	            return [[x - 1, y - 1], [x, y - 1], [x + 1, y - 1], [x - 1, y], [x + 1, y], [x - 1, y + 1], [x, y + 1], [x + 1, y + 1]].map(this.wrap, this);
+	        }
+	    }, {
+	        key: 'nextCellState',
+	        value: function nextCellState(_ref7) {
+	            var _ref8 = _slicedToArray(_ref7, 2),
+	                x = _ref8[0],
+	                y = _ref8[1];
+
+	            var c = this.cellAt([x, y]);
+	            var n = this.countNeighbors([x, y]);
+
+	            // A cell is alive next gen iff it has 3 neighbors (even if currently
+	            // dead) or if it's already alive and has 2 neighbors.
+	            return n === 3 || c && n === 2;
+	        }
+	    }, {
+	        key: 'nextState',
+	        value: function nextState() {
+	            var newCells = [];
+	            for (var y = 0; y < this.height; y++) {
+	                for (var x = 0; x < this.width; x++) {
+	                    newCells.push(this.nextCellState([x, y]));
+	                }
+	            }
+	            return newCells;
+	        }
+	    }, {
+	        key: 'setCells',
+	        value: function setCells(cells) {
+	            if (cells.length !== this.width * this.height) {
+	                throw 'Bad array length for cells array';
+	            }
+	            this.cells = cells;
+	        }
+	    }, {
+	        key: 'step',
+	        value: function step() {
+	            this.cells = this.nextState();
+	        }
+	    }, {
+	        key: 'stringRep',
+	        value: function stringRep() {
+	            var rep = '';
+	            for (var y = 0; y < this.height; y++) {
+	                rep += rep.length > 0 ? '\n' : '';
+	                for (var x = 0; x < this.width; x++) {
+	                    rep += this.cellAt([x, y]) ? '*' : '-';
+	                }
+	            }
+	            return rep;
+	        }
+	    }, {
+	        key: 'wrap',
+	        value: function wrap(_ref9) {
+	            var _ref10 = _slicedToArray(_ref9, 2),
+	                x = _ref10[0],
+	                y = _ref10[1];
+
+	            return [wrapValue(x, this.width), wrapValue(y, this.height)];
+	        }
+	    }]);
+
+	    return Life;
+	}();
+
+	exports.default = Life;
+
+/***/ },
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(184);
+	var content = __webpack_require__(185);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(186)(content, {});
+	var update = __webpack_require__(187)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -22062,10 +22235,10 @@
 	}
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(185)();
+	exports = module.exports = __webpack_require__(186)();
 	// imports
 
 
@@ -22076,7 +22249,7 @@
 
 
 /***/ },
-/* 185 */
+/* 186 */
 /***/ function(module, exports) {
 
 	/*
@@ -22132,7 +22305,7 @@
 
 
 /***/ },
-/* 186 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
